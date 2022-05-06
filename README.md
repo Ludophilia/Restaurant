@@ -27,5 +27,5 @@ L'application nécessite l'exécution d'un mini serveur HTTP Python contenu dans
 
 ## Captures
 
-<img src="walkthough_iphone13.gif" style="height:500px">
+<img src="walkthough_iphone13.gif" style="height:750px">
 
