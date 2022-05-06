@@ -18,7 +18,7 @@ D'un point de vue pédagogique, ce projet renforce les acquis des projets [Light
 
 L'application est optimisée pour iOS 15.
 
-L'application nécessite de l'execution d'un mini serveur HTTP Python contenu dans le fichier `restaurantserver.py`. Ce serveur nécessite une version de Python >= 3.6.
+L'application nécessite l'exécution d'un mini serveur HTTP Python contenu dans le fichier `restaurantserver.py`. Ce serveur nécessite une version de Python >= 3.6.
 
  Pour lancer le serveur :
  1. Lancer le terminal
@@ -27,4 +27,6 @@ L'application nécessite de l'execution d'un mini serveur HTTP Python contenu da
 
 ## Captures
 
-<img src="walkthough_iphone13.gif">
+<div style="width: 50vh">
+    <img src="walkthough_iphone13.gif">
+</div>
