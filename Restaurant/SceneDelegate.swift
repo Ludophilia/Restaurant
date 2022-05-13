@@ -20,15 +20,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         MenuController.shared.saveItems()
     }
 
-    func sceneDidBecomeActive(_ scene: UIScene) {
-    }
-
-    func sceneWillResignActive(_ scene: UIScene) {
-    }
-
-    func sceneWillEnterForeground(_ scene: UIScene) {
-    }
-
     func sceneDidEnterBackground(_ scene: UIScene) {
         MenuController.shared.saveOrder()
         MenuController.shared.saveItems()

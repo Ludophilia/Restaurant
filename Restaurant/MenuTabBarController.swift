@@ -9,12 +9,23 @@ import UIKit
 
 class MenuTabBarController: UITabBarController {
     
+    // MARK: TabBar UI Elements
+
     var orderTabBarItem: UITabBarItem!
+    
+    // MARK: Setup
+
+    func setUpOrderTabBarItem() {
+        orderTabBarItem = tabBar.items![1]
+        NotificationCenter.default.addObserver(self, selector: #selector(updateOrderBadge), name: MenuController.orderUpdatedNotification, object: nil)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setUpOrderTabBarItem()
     }
+    
+    // MARK: TabBar State Refresh
     
     @objc func updateOrderBadge() {
         
@@ -25,20 +36,5 @@ class MenuTabBarController: UITabBarController {
             orderTabBarItem.badgeValue = String(count)
         }
     }
-    
-    func setUpOrderTabBarItem() {
-        orderTabBarItem = tabBar.items![1]
-        NotificationCenter.default.addObserver(self, selector: #selector(updateOrderBadge), name: MenuController.orderUpdatedNotification, object: nil)
-    }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

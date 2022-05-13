@@ -2,8 +2,12 @@ import UIKit
 
 class MenuTableViewController: UITableViewController {
 
+    // MARK: Data
+    
     var category: String! // Since this shouldn't be displayed without category data, make the property an implicitely unwrapped optional.
     var menuItems = [MenuItem]()
+    
+    // MARK: Setup and Refresh
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +32,7 @@ class MenuTableViewController: UITableViewController {
         tableView.reloadData()
     }
 
-    // MARK: - Table view data source
+    // MARK: TableView Setup (UITableViewDataSource)
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -46,6 +50,7 @@ class MenuTableViewController: UITableViewController {
         contentConfiguration.text = menuItem.name
         contentConfiguration.secondaryText = String(format: "$%.2f", menuItem.price)
 
+        // Why not rework this piece with async/await ?
         MenuController.shared.fetchImage(url: menuItem.imageURL) { image in
             DispatchQueue.main.async {
                 if let image = image {
@@ -67,7 +72,7 @@ class MenuTableViewController: UITableViewController {
         return cell
     }
 
-    // MARK: - Table view delegate
+    // MARK: - TableView Setup (UITableViewDelegate)
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
@@ -96,32 +101,13 @@ class MenuTableViewController: UITableViewController {
         }
     }
     
-    // MARK: - State Restoration for Conservatives
-    
-//    override func encodeRestorableState(with coder: NSCoder) {
-//        super.encodeRestorableState(with: coder)
-//        print("MenuTableViewController encodeRestorableState")
-//
-//        coder.encode(category, forKey: "category")
-//    }
-//    
-//    override func decodeRestorableState(with coder: NSCoder) {
-//        super.decodeRestorableState(with: coder)
-//        
-//        print("MenuTableViewController decodeRestorableState")
-//        if let category = coder.decodeObject(forKey: "category") as? String {
-//            self.category = category
-//        }
-//        updateUI()
-//    }
-    
     // MARK: - Navigation
         
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "MenuDetailSegue", let detailViewController = segue.destination as? MenuItemDetailViewController, let selectedRow = tableView.indexPathForSelectedRow?.row {
-            let menuItem = menuItems[selectedRow]
-            detailViewController.menuItem = menuItem
+            
+            detailViewController.menuItem = menuItems[selectedRow]
         }
     }
 

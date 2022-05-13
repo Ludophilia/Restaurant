@@ -2,7 +2,11 @@ import UIKit
 
 class CategoryTableViewController: UITableViewController {
     
+    // MARK: Network data
+    
     var categories = [String]()
+
+    // MARK: General Setup
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -10,13 +14,16 @@ class CategoryTableViewController: UITableViewController {
         updateCategories()
     }
     
+    // MARK: Refresh
+    
     @objc func updateCategories() {
         categories = MenuController.shared.categories
-//        print("categories updated")
-        tableView.reloadData() // Is this really needed?
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
     
-    // MARK: - Table view data source
+    // MARK: - TableView Setup (UITableViewDataSource)
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -30,7 +37,7 @@ class CategoryTableViewController: UITableViewController {
         let category = self.categories[indexPath.row]
 
         var contentConfiguration = cell.defaultContentConfiguration()
-        contentConfiguration.text = category.capitalized // category.removeFirst().uppercased() + category
+        contentConfiguration.text = category.capitalized
         cell.contentConfiguration = contentConfiguration
     }
     
@@ -46,9 +53,8 @@ class CategoryTableViewController: UITableViewController {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "MenuSegue", let menuTableViewController = segue.destination as? MenuTableViewController, let selectedRow = tableView.indexPathForSelectedRow?.row {
-
-            let selectedCategory = categories[selectedRow]
-            menuTableViewController.category = selectedCategory
+            
+            menuTableViewController.category = categories[selectedRow]
         }
     }
 }

@@ -2,13 +2,19 @@ import UIKit
 
 class MenuItemDetailViewController: UIViewController {
     
+    // MARK: Data
+    
     var menuItem: MenuItem!
 
-    @IBOutlet var titleLabel: UILabel!
+    // MARK: UI Componenents
+    
     @IBOutlet var imageView: UIImageView!
+    @IBOutlet var titleLabel: UILabel!
     @IBOutlet var priceLabel: UILabel!
     @IBOutlet var detailTextLabel: UILabel!
     @IBOutlet var addToOrderButton: UIButton!
+    
+    // MARK: Setup and Refresh
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,6 +34,7 @@ class MenuItemDetailViewController: UIViewController {
         priceLabel.text = String(format:"$ %.2f", menuItem.price)
         detailTextLabel.text = menuItem.itemDescription
         
+        // Why not rework this piece with async/await ?
         MenuController.shared.fetchImage(url: menuItem.imageURL) { image in
             DispatchQueue.main.async {
                 if let image = image {
@@ -38,6 +45,8 @@ class MenuItemDetailViewController: UIViewController {
             }
         }
     }
+    
+    // MARK: UI Events Response
     
     @IBAction func orderButtonTapped(_ sender: Any) {
         UIView.animate(withDuration: 0.5) {
@@ -51,7 +60,7 @@ class MenuItemDetailViewController: UIViewController {
         MenuController.shared.order.menuItems.append(menuItem)
     }
     
-    // MARK: - State Restoration
+    // MARK: State Restoration
         
     func updateUserActivity() {
         let currentUserActivity = view.window?.windowScene?.userActivity ?? NSUserActivity(activityType: "com.example.mainActivity")
@@ -74,34 +83,4 @@ class MenuItemDetailViewController: UIViewController {
             return false
         }
     }
-
-    // MARK: - State Restoration for Conservatives
-    
-//    override func encodeRestorableState(with coder: NSCoder) {
-//        super.encodeRestorableState(with: coder)
-//        print("MenuItemDetailViewController encodeRestorableState")
-//
-//        coder.encode(menuItem.id, forKey: "menuItemId")
-//    }
-//
-//    override func decodeRestorableState(with coder: NSCoder) {
-//        super.decodeRestorableState(with: coder)
-//        print("MenuItemDetailViewController decoderestorableState")
-//        let menuItemID = coder.decodeInteger(forKey: "menuItemId")
-//
-//        if let menuItem = MenuController.shared.item(withID: menuItemID) {
-//            self.menuItem = menuItem
-//            updateUI()
-//        }
-//    }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 }
